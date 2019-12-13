@@ -1,2 +1,74 @@
-<h2>What is subroutine signatures</h2>
+<h2>Why we want subroutine signatures?</h2>
 
+As a first starting point, why do we want a subroutine signature?
+
+What is missing in Perl?
+
+<h4>JavaScript Function Definition</h4>
+
+At first, see JavaScript code. foo function definition.
+
+<pre>
+function foo (args1, args2) {
+  
+}
+</pre>
+
+<h4>Ruby Function Definition</h4>
+
+Next, see Ruby code of foo function definition.
+
+<pre>
+def foo (args1, args2)
+  
+end
+</pre>
+
+<h4>Python Function Definition</h4>
+
+Next, see Python code of foo function definition.
+
+<pre>
+def foo (args1, args2)
+  
+</pre>
+
+<h4>PHP Function Definition</h4>
+
+Next, see PHP code of foo function definition.
+
+<pre>
+function foo ($args1, $args2) {
+
+}
+</pre>
+
+<h4>Perl Function Definition</h4>
+
+Last, see Perl code of foo function definition.
+
+<pre>
+sub foo {
+  my ($args1, $args2) = @_;
+}
+</pre>
+
+Why Perl don't write the other languages?
+
+<h3>Argument definition is very generally expression</h3>
+
+Argument definition is very generally expression in other all of modern programming languages.
+
+People say
+
+"What is @_?"
+
+"Perl have many symbols."
+
+"Perl is a old and dirty language"
+
+<b>We need subroutine signatures to make Perl argument definitions fit into a very general expression.</b>
+
+This is most biggest reason.
+
+Subroutine signatures remove one of the criticisms "Perl is unreadable".
