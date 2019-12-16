@@ -1,0 +1,130 @@
+<h2>Risk increased by checking the number of subroutine arguments</h2>
+
+The current subroutine signature specification checks the number of subroutine arguments.
+
+Many people think that this reduces the mistake of checking for incorrect argument count.
+
+<pre>
+sub foo ($args1, $args2) {
+  
+}
+
+# Exception occur for argument count is difference
+foo(1, 2, 3);
+</pre>
+
+On the other hand, there is actually risks of increasing by checking the argument count.
+
+<h3>Unexpected exception due to later increase of subroutine arguments</h3>
+
+I yet see the discussion that unexpected exception due to later increase of subroutine arguments.
+
+I will explain this with a sample.
+
+First, a subroutine is defined with one argument.
+
+<pre>
+sub foo ($num) {
+  
+}
+</pre>
+
+User use this subroutine in many place.
+
+<pre>
+foo(1);
+
+foo(2);
+
+foo(3);
+</pre>
+
+After a while, you want to pass options to this function and change the code to:
+
+<pre>
+sub foo ($num, $opt) {
+  $opt //= {};
+}
+</pre>
+
+
+The user believes it is the same as the following change:
+
+<pre>
+# Before
+sub foo {
+  my ($num) = @_;
+}
+
+# After
+sub foo {
+  my ($num, $opt) = @_;
+}
+</pre>
+
+Long-time Perl users know that this change doesn't break the source code and this is how it works.
+
+This change is a long practice for Perl users and has been going on for a long time.
+
+On the other hand, checking the number of arguments in a subroutine signature yields different results.
+
+<pre>
+# Unexpected exception
+foo(1);
+
+# Unexpected exception
+foo(2);
+
+# Unexpected exception
+foo(3);
+</pre>
+
+
+"The program is broken. An exception is thrown in an unexpected place!"
+
+There is a risk of adding unexpected bugs by checking the number of subroutine arguments.
+
+<h3>Should I use the default value?</h3>
+
+Such an answer seems to be returned to the above problem.
+
+"Should I use the default value?"
+
+<pre>
+sub foo ($num, $opt = {}) {
+
+}
+</pre>
+
+This is work well in fact.
+
+What is the problem I feel about this?
+
+This is unintended behavior for users who have been using Perl for a long time.
+
+Perl users generally do not expect Perl to be constrained.
+
+Perl users expect that there are no constraints by default.
+
+The presence of constraints by calling the module is the user's choice, but the subroutine signature is a core feature.
+
+If Perl user write the following for long-standing habits, code is broken. 
+
+<pre>
+sub foo ($num, $opt) {
+  $opt //= {};
+}
+</pre>
+
+"Oh, in production code, an unexpected exception has occurred! Subroutine signature increases unexpected risk!"
+
+Are we just thinking that adding constraints reduces the risk of mistakes?
+
+Want to add to the discussion that an unexpected exception can break your production code?
+
+Do Perl subroutine signatures require a constraints of number of arguments? 
+
+Isn't it essential?
+
+Is checking the number of subroutines compatible with Perl's dynamic mechanism?
+
