@@ -1,0 +1,126 @@
+<h2>Are array and hash representations really needed?</h2>
+
+Are array and hash representations really needed?
+
+Currently, "@foo" is proposed as the array representation. "%foo" is proposed as the representation of the hash.
+
+<pre>
+# Array representation
+sub (@foo) {
+  
+}
+sub ($var, @foo) {
+  
+}
+
+# Hash representation
+sub (%foo) {
+  
+}
+
+sub ($var, %foo) {
+  
+}
+</pre>
+
+Are these always necessary?
+
+<h3>Alternative representation using only scalar variables</h3>
+
+You can rewrite the above array and hash representation using only scalar variables if you need copy.
+
+<pre>
+# Array representation
+sub ($foo) {
+  my @foo = @$foo;
+  
+}
+sub ($var, $foo) {
+  my @foo = @$foo;
+}
+
+# Hash representation
+sub ($foo) {
+  my %foo = %$foo;
+}
+sub ($var, $foo) {
+  my %foo = %$foo;
+}
+</pre>
+
+<h3>In many languages, array and hash passed as a reference</h3>
+
+In many languages, array and hash passed as a reference.
+
+<h4>JavaScript Function Definition</h4>
+
+At first, see JavaScript code. foo function definition.
+
+<pre>
+function foo (nums, opt) {
+  
+}
+</pre>
+
+<h4>Ruby Function Definition</h4>
+
+Next, see Ruby code of foo function definition.
+
+<pre>
+def foo (nums, opt)
+  
+end
+</pre>
+
+<h4>Python Function Definition</h4>
+
+Next, see Python code of foo function definition.
+
+<pre>
+def foo (nums, opt)
+  
+</pre>
+
+<h4>PHP Function Definition</h4>
+
+Next, see PHP code of foo function definition.
+
+<pre>
+function foo ($nums, $opt) {
+
+}
+</pre>
+
+<h4>Perl</h4>
+
+Subroutine signature of Perl is special.
+
+<pre>
+sub ($var, @foo) {
+  
+}
+
+sub ($var, %foo) {
+  
+}
+</pre>
+
+In fact, current Perl already have reference  different from past Perl.
+
+If it is limited to only scalar variables as arguments of subroutine signatures, alternative expressions are possible.
+
+<h3>What is benefit of limited only scalar variables?</h3>
+
+What is benefit of limited only scalar variables?
+
+The biggest benefit is that the subroutine signature is very simple.
+
+Perl is already big and complex.
+
+External people feel that Perl is already difficult to read and complex.
+
+Therefore, the subroutine signature specification, which is easy to understand, gives good evaluation when viewed from outside.
+
+The Perl internal community may be frustrated.
+
+What is good balance?
