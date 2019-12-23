@@ -1,0 +1,83 @@
+<h2>Type Constraints using Type::Tiny and attribute handler</h2>
+
+If you can perform type checking with an attribute handler and <a href="https://metacpan.org/pod/Type::Tiny">Type::Tiny</a>, Perl will be more attractive.
+
+For example.
+
+<pre>
+use Type::Tiny::Signatures;
+
+sub foo ($str : Str, $num : Int) {
+  
+}
+</pre>
+
+<h3>What is attribute handler?</h3>
+
+The attribute handler is a function that can handle the attribute setting of subroutines and variables from Perl 5.6.
+
+<pre>
+#!perl -w
+use strict;
+
+sub MODIFY_CODE_ATTRIBUTES{
+  my($class, $code_ref, $attr_name) = @_;
+  Dump($code_ref);
+}
+
+# Subroutine attribute
+sub foo : MyAttr {
+
+}
+</pre>
+
+
+Perl already has a syntax called attributes.
+
+<pre>
+sub foo : attribute
+</pre>
+
+<h3>Attribute for arguments of subroutine signatures</h3>
+
+We are fortunate.
+
+Aattributes of subroutine argument are not yet implemented.
+
+We can implement the use of subroutine attributes without worrying about the past.
+
+It would be nice to be able to check arguments by combining a subroutine argument attribute handler with <a href="https://metacpan.org/pod/Type::Tiny">Type::Tiny</a>.
+
+<pre>
+use Type::Tiny::Signatures;
+
+sub foo ($str : Str, $num : Int) {
+  
+}
+</pre>
+
+<h3>Perl core is all dynamic, and you can add listrictions by module</h3>
+
+We have known for 30 years that all Perl core is dynamic.
+
+Perl has no restrictions by default.
+
+On the other hand, you can incorporate constraints by using modules.
+
+For example,
+
+<a href="https://metacpan.org/pod/fields">fields</a> modules for field listrictions.
+
+<a href="https://metacpan.org/pod/Hash::Util">Hash::Util::lock_keys</a> for hash key listrictions.
+
+Sure, <a href="https://metacpan.org/pod/Type::Tiny">Type::Tiny</a> for type constraints.
+
+This is 30 years of Perl convention.
+
+If signatures is dynamic and, add listrictions by module and attribute handler,
+
+We are likely to be able to work with the old and the new and solve the Perl community's dissatisfaction.
+
+I hope that older users who have enjoyed the dynamic types of Perl can collaborate with the Perl community who wanted to do type checking.
+
+I suggest an implementation where <a href="https://metacpan.org/pod/Type::Tiny">Type::Tiny</a> works correctly with subroutine signatures.
